@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NASA Image Search</title>
+    <!-- Use Open Source Bulma CSS Template -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.4/css/bulma.min.css">
     <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
 </head>
@@ -22,11 +23,11 @@
     <section class="section">
         <div class="container">
             <div class="columns">
-                <div class="column is-offset-4 is-4">
+                <div class="column is-4">
                     <form method="POST">
                         <div class="field has-addons">
                             <div class="control is-expanded">
-                                <input class="input" type="text" placeholder="Keywords">
+                                <input class="input" type="text" placeholder="Search for...">
                             </div>
                             <div class="control">
                                 <button class="button is-info">
@@ -36,33 +37,46 @@
                         </div>
                     </form>
                 </div>
+                <div class="column">
+                    <!-- Horizontal list of past searches. -->
+                    Past searches:
+                    {% for search in past_searches %}
+                        <a href = "./"> {{search}}</a>
+                    {% endfor %} 
+                </div>
             </div>
         </div>
     </section>
     <section class="section">
         <div class="container">
-            <div class="columns">
-                <div class="column is-offset-4 is-4">
-                    <div class="box">
-                        <article class="media">
-                            <div class="media-left">
-                                <figure class="image is-50x50">
-                                    <img src="http://openweathermap.org/img/w/10d.png" alt="Image">
-                                </figure>
-                            </div>
-                            <div class="media-content">
-                                <div class="content">
-                                    <p>
-                                        <span class="title">Las Vegas</span>
-                                        <br>
-                                        <span class="subtitle">29° F</span>
-                                        <br> thunderstorm with heavy rain
-                                    </p>
+            <div class="columns is-multiline">
+                {% for image in metadata_list %}
+                    <div class="column is-4">
+                        <div class="box">
+                            <article class="media">
+                                <div class="media">
+                                    <figure class="image is-50x50">
+                                        <img src= {{ image.media_link }} alt="Media">
+                                    </figure>
                                 </div>
-                            </div>
-                        </article>
+                                <div class="media-content">
+                                    <div class="content">
+                                        <p>
+                                            <span class="title">{{ image.title }}</span>
+                                            <br>
+                                            <span class="subtitle">{{ image.date_created }}</span>
+                                            <br> 
+                                            {{ image.description }}
+                                            <br>
+                                            Location: {{ image.location }}
+                                            <br>
+                                        </p>
+                                    </div>
+                                </div>
+                            </article>
+                        </div>
                     </div>
-                </div>
+                {% endfor %}
             </div>
         </div>
     </section>
