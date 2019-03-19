@@ -8,9 +8,11 @@
     <!-- Use Open Source Bulma CSS Template -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.4/css/bulma.min.css">
     <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/styles.css'%}">
 </head>
 
-<body>
+<body class="Site">
     <!-- Section for title. -->
     <section class="hero is-primary is-bold">
         <div class="hero-body">
@@ -76,7 +78,18 @@
             </div>
         </div>
     </section>
+    <main class="Site-content">
+    </main>
     <footer class="footer">
+        <div class="content has-text-centered">
+            <p>
+                Developed by Eric Lin.
+                <br>
+                Images from NASA Image API. Open source Bulma styling.
+                <br>
+                March 2019  
+            </p>            
+      </div>
     </footer>
 </body>
 
