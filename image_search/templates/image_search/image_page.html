@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Metadata</title>
+    <!-- Use Open Source Bulma CSS Template -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.4/css/bulma.min.css">
+    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+</head>
+
+<body>
+	<!-- Section for title. -->
+    <section class="hero is-dark is-bold">
+        <div class="hero-body">
+            <div class="container">
+                <h1 class="title">
+                    NASA Image Metadata
+                </h1>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section for displaying the image. -->
+    <section class="section">
+    	<div class="container">
+    		<div class="columns">
+    			<div class="column is-10 is-offset-2">
+    				<!-- image -->
+    				<figure>
+                        <img src= {{ image.media_link }} alt="Media">
+                    </figure>
+                    <!-- metadata -->
+                    <div class="content">
+                        <p>
+                            <span class="title">{{ image.title }}</span>
+                            <br>
+                            <span class="subtitle">{{ image.date_created }}</span>
+                            <br> 
+                            {{ image.description }}
+                            <br>
+                            Location: {{ image.location }}
+                            <br>
+                        </p>
+                    </div>
+    			</div>
+    		</div>
+    	</div>
+    </section>
+
+	<footer class="footer">
+    </footer>
+</body>

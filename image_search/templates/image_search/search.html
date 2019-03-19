@@ -11,7 +11,8 @@
 </head>
 
 <body>
-    <section class="hero is-primary">
+    <!-- Section for title. -->
+    <section class="hero is-primary is-bold">
         <div class="hero-body">
             <div class="container">
                 <h1 class="title">
@@ -20,17 +21,19 @@
             </div>
         </div>
     </section>
+    <!-- Section for searching and displaying past searches. -->
     <section class="section">
         <div class="container">
             <div class="columns">
                 <div class="column is-4">
                     <form method="POST">
+                        {% csrf_token %}
                         <div class="field has-addons">
                             <div class="control is-expanded">
-                                <input class="input" type="text" placeholder="Search for...">
+                                {{ form.search_query }}
                             </div>
                             <div class="control">
-                                <button class="button is-info">
+                                <button type="submit" class="button is-info">
                                     Search
                                 </button>
                             </div>
@@ -38,7 +41,7 @@
                     </form>
                 </div>
                 <div class="column">
-                    <!-- Horizontal list of past searches. -->
+                    <!-- Links to past searches. -->
                     Past searches:
                     {% for search in past_searches %}
                         <a href = "./"> {{search}}</a>
@@ -46,34 +49,27 @@
                 </div>
             </div>
         </div>
+        <!-- Container to display number of search results. -->
+        <div class="container">
+            <div class="column is-4">
+                <p>
+                    {% if num_hits != 0 %} 
+                        {{ num_hits }} search results
+                    {% endif %}
+                </p>
+            </div>
+        </div>
     </section>
+    <!-- Section to display images. -->
     <section class="section">
         <div class="container">
             <div class="columns is-multiline">
                 {% for image in metadata_list %}
                     <div class="column is-4">
-                        <div class="box">
-                            <article class="media">
-                                <div class="media">
-                                    <figure class="image is-50x50">
-                                        <img src= {{ image.media_link }} alt="Media">
-                                    </figure>
-                                </div>
-                                <div class="media-content">
-                                    <div class="content">
-                                        <p>
-                                            <span class="title">{{ image.title }}</span>
-                                            <br>
-                                            <span class="subtitle">{{ image.date_created }}</span>
-                                            <br> 
-                                            {{ image.description }}
-                                            <br>
-                                            Location: {{ image.location }}
-                                            <br>
-                                        </p>
-                                    </div>
-                                </div>
-                            </article>
+                        <div class="box is-dark">
+                            <figure>
+                                <img src= {{ image.media_link }} alt="Media">
+                            </figure>
                         </div>
                     </div>
                 {% endfor %}
