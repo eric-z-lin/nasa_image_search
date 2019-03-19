@@ -8,7 +8,12 @@ from .forms import ImageForm, SearchForm
 def index(request):
 	if request.method == 'GET':		# e.g. type in main page
 		form = SearchForm()
-		past_searches = list(Search.objects.values_list('search_query', flat = True))[-5:]	# get past search results
+		past_searches = list(Search.objects.values_list('search_query', flat = True))[-10:]	# get past search results
+		# Remove repeats
+		for i in past_searches:
+			while past_searches.count(i) > 1:
+				past_searches.remove(i)
+		past_searches = past_searches[-5:]	# ensure it's last 5 searches
 		num_hits = 0
 		context = {'metadata_list': [], 'past_searches': past_searches, 'form': form, 'num_hits': num_hits}
 		return render(request, 'image_search/search.html', context)	# render search html
@@ -31,7 +36,12 @@ def index(request):
 			# 'year_end': '2009',
 		}
 
-		past_searches = list(Search.objects.values_list('search_query', flat = True))[-5:]	# get past search results
+		past_searches = list(Search.objects.values_list('search_query', flat = True))[-10:]	# get past search results
+		# Remove repeats
+		for i in past_searches:
+			while past_searches.count(i) > 1:
+				past_searches.remove(i)
+		past_searches = past_searches[-5:]		# ensure last 5 searches
 
 		url = 'https://images-api.nasa.gov/search'	# url call to NASA API 
 
