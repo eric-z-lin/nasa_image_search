@@ -20,8 +20,11 @@ def index(request):
 
 	if request.method == 'POST':		# if user searched
 		form = SearchForm(request.POST)		# save user form input
-		form.save()
 		q = form['search_query'].value()	# input string
+		if form.is_valid():
+			form.save()
+		else:			# past search
+			q = request.POST['past_submit']
 
 		# Dictionary to pass params to API
 		payload = {

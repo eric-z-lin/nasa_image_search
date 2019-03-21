@@ -4,6 +4,6 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('', views.index),			# path for index view
+    path('', views.index, name='index'),			# path for index view
     path('./image-page', views.image_page)	# path for image metadata page
 ]

@@ -52,11 +52,18 @@
                         </div>
                     </form>
                 </div>
-                <div class="column">
+                <div class="columns is-gapless">
                     <!-- Links to past searches. -->
                     Past searches:
                     {% for search in past_searches %}
-                        <a href = "./"> {{search}}</a>
+                        <div class="column">
+                            <form action="{% url 'index' %}" method="POST">
+                                {% csrf_token %}
+                                <button name="past_submit" value="{{search}}" type="submit" class="button"> 
+                                    {{search}}
+                                </button>
+                            </form>
+                        </div>
                     {% endfor %} 
                 </div>
             </div>
@@ -75,10 +82,10 @@
     <!-- Section to display images. -->
     <section class="section">
         <div class="container">
-            <div class="columns is-multiline is-mobile">
+            <div class="columns is-multiline is-mobile is-variable">
                 {% for image in metadata_list %}
                     <div class="column is-4">
-                        <div class="box is-dark">
+                        <div class="box">
                             <figure>
                                 <img src= {{ image.media_link }} alt="Image">
                             </figure>
@@ -93,9 +100,9 @@
     <footer class="footer">
         <div class="content has-text-centered">
             <p>
-                Developed by Eric Lin.
+                Developed by Eric Lin
                 <br>
-                Images from NASA Image API. Open source Bulma styling.
+                Images from NASA Image API. Open source Bulma styling
                 <br>
                 March 2019  
             </p>            
