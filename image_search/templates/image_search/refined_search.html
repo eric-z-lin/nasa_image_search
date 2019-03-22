@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NASA Image Search</title>
+    <title>NASA Image Refined Search</title>
     <!-- Use Open Source Bulma CSS Template -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.4/css/bulma.min.css">
     <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
@@ -21,7 +21,7 @@
                 <div class="column is-4">
                     <div class="container">
                         <h1 class="title">
-                            <a href="/"> NASA Image API Search </a>
+                            <a href="/"> NASA Image API Refined Search </a>
                         </h1>
                     </div>
                 </div>
@@ -37,21 +37,6 @@
     <section class="section">
         <div class="container">
             <div class="columns is-mobile is-gapless">
-                <div class="column is-4">
-                    <form method="POST">
-                        {% csrf_token %}
-                        <div class="field has-addons">
-                            <div class="control is-expanded">
-                                {{ form.search_query }}
-                            </div>
-                            <div class="control">
-                                <button type="submit" class="button is-info">
-                                    Search
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
                 <div class="columns is-gapless">
                     <!-- Links to past searches. -->
                     <button class="button"> Past searches: </button>
@@ -67,42 +52,48 @@
                     {% endfor %} 
                 </div>
             </div>
-        </div>
-        <!-- Container to display number of search results. -->
-        <div class="container">
-            <a href="/refined-search"> Refine search </a>
-            <div class="column is-4 is-mobile">
-                <p>
-                    {% if num_hits != 0 %} 
-                        {{ num_hits }} search results for "{{q}}"
-                    {% endif %}
-                </p>
-            </div>
-        </div>
-    </section>
-    <!-- Section to display images. -->
-    <section class="section">
-        <div class="container">
-            <div class="columns is-multiline is-mobile is-variable">
-                {% for image in metadata_list %}
-                    <div class="column is-4">
-                        <div class="box">
-                            <figure>
-                                <a href="{% url 'image_page' %}?id={{image.nasa_id}}"> 
-                                    <object data="{{ image.media_link }}" type="image/jpg" alt="Image {{ image.media_link }}">
-                                    </object>
-                                </a>
-                            </figure>
+            <div class="column is-4 is-offset-4">
+                <center> Refine your search with the options below. Only required field is search query.</center>
+                <form method="POST">
+                    {% csrf_token %}
+                    <div class="field">
+                        <label class="label"> Search query </label>
+                        <div class="control is-expanded">
+                            {{ form.search_query }}
                         </div>
                     </div>
-                {% endfor %}
+                    <div class="field">
+                      <label class="label">Description</label>
+                      <div class="control">
+                        <input class="input" name="description" type="text" placeholder="Search in description...">
+                      </div>
+                    </div>
+                    <div class="field">
+                      <label class="label">Location</label>
+                      <div class="control">
+                        <input class="input" name="location" type="text" placeholder="e.g. Kennedy Space Center">
+                      </div>
+                    </div>
+                    <div class="field">
+                      <label class="label">Year Range</label>
+                      <div class="control">
+                        <input class="input" name="year_start" type="number" min="1800" max="2019" placeholder="Start Year">
+                        to 
+                        <input class="input" name="year_end" type="number" min="1800" max="2019" placeholder="End Year">
+                      </div>
+                    </div>
+                    <div class="control">
+                        <button type="submit" class="button is-info">
+                            Search
+                        </button>
+                    </div>  
+                </form>
             </div>
         </div>
     </section>
+    <!-- Footer -->
     <footer class="footer">
         <div class="content has-text-centered">
-            <br>
-            <br>
             <p>
                 Developed by Eric Lin
                 <br>
