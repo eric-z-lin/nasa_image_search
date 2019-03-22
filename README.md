@@ -1,7 +1,7 @@
 # NASA Image Search
 
-Website for searching images using NASA's API.
-Use it here: https://nasa-image-api.herokuapp.com/
+Website for searching images using NASA's API.  
+Link to website deployed on heroku: https://nasa-image-api.herokuapp.com/
 
 Functionality:  
 1. Search Function of displaying images from NASA's Image API.  
