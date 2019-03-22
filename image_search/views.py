@@ -18,13 +18,15 @@ def index(request):
 		context = {'metadata_list': [], 'past_searches': past_searches, 'form': form, 'num_hits': num_hits}
 		return render(request, 'image_search/search.html', context)	# render search html
 
-	if request.method == 'POST':		# if user searched
+	elif request.method == 'POST':		# if user searched
 		form = SearchForm(request.POST)		# save user form input
 		q = form['search_query'].value()	# input string
 		if form.is_valid():
 			form.save()
 		else:			# past search
-			q = request.POST['past_submit']
+			q = request.POST.get('past_submit', False)
+			if q == False:
+				return render(request, 'image_search/search.html')
 
 		# Dictionary to pass params to API
 		payload = {
@@ -81,16 +83,54 @@ def index(request):
 				# 'description': d['data'][0]['description'],	# long paragraph of text
 				# 'location': d['data'][0]['location'],
 				# 'date_created': d['data'][0]['date_created'][:10],
-				# 'nasa_id': d['data'][0]['nasa_id'],			# nasa_id of object
+				'nasa_id': d['data'][0]['nasa_id'],			# nasa_id of object
 				'media_link': d['links'][0]['href'],		# href link to media
 			}
 			metadata_list.append(image_metadata)
 
 		# Pass to template html
-		context = {'metadata_list': metadata_list, 'past_searches': past_searches, 'form': form, 'num_hits' : num_hits}
+		context = {
+			'metadata_list': metadata_list, 
+			'past_searches': past_searches, 
+			'form': form, 
+			'num_hits' : num_hits,
+			'q': q
+		}
 
 		return render(request, 'image_search/search.html', context)	# render search.html
 
 def image_page(request):
+	if request.method == 'GET':
+		nasa_id = request.GET.get('id', '')
+		if nasa_id == '':
+			# REDIRECT TO GENERIC PAGE
+			return render(request, 'image_search/search.html')
+		else:
+			payload = {
+				# Search nasa_id
+				'nasa_id': nasa_id,
+			}
+			url = 'https://images-api.nasa.gov/search'	# url call to NASA API 
+			r = requests.get(url, params= payload).json()	# requests to get json
+			image_metadata = {}
+			for d in r['collection']['items']:	# items is a list of dictionaries
+				# Select relevant metadata from item dictionary
+				if 'title' in d['data'][0]:
+					image_metadata['title'] = d['data'][0]['title']
+				if 'description' in d['data'][0]:
+					image_metadata['description'] = d['data'][0]['description']	# long paragraph of text
+				if 'location' in d['data'][0]:	
+					image_metadata['location'] = d['data'][0]['location']
+				if 'date_created' in d['data'][0]:
+					image_metadata['date_created'] = d['data'][0]['date_created'][:10]
+				if 'nasa_id' in d['data'][0]:
+					image_metadata['nasa_id'] = d['data'][0]['nasa_id']			# nasa_id of object
+				if 'href' in d['links'][0]:
+					image_metadata['media_link'] = d['links'][0]['href']		# href link to media
+			# Pass to template html
+			context = {
+				'image': image_metadata, 
+			}
+			return render(request, 'image_search/image_page.html', context)		# render image_page.html
 
-	return render(request, 'image_search/image_page.html')
+

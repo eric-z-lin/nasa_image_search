@@ -7,3 +7,8 @@
 .Site-content {
   flex: 1;
 }
+
+.is-vertical-center {
+  display: flex;
+  align-items: center;
+}

@@ -8,16 +8,26 @@
     <!-- Use Open Source Bulma CSS Template -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.4/css/bulma.min.css">
     <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/styles.css'%}">
+    <link rel="shortcut icon" href="{% static 'images/nasa_favicon2.ico' %}">
 </head>
 
-<body>
+<body class="Site">
 	<!-- Section for title. -->
     <section class="hero is-dark is-bold">
         <div class="hero-body">
             <div class="container">
-                <h1 class="title">
-                    NASA Image Metadata
-                </h1>
+                <div class="columns">
+                    <h1 class="title">
+                        NASA Image Metadata
+                    </h1>
+                    <div class="column is-offset-7">
+                        <h2 class="subtitle">
+                            <a href="/"> Back to search. </a>
+                        </h2>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -26,11 +36,14 @@
     <section class="section">
     	<div class="container">
     		<div class="columns">
-    			<div class="column is-10 is-offset-2">
+    			<div class="column">
     				<!-- image -->
     				<figure>
-                        <img src= {{ image.media_link }} alt="Media">
+                        <object data= {{ image.media_link }} type="image/jpg" alt="Image {{ image.media_link }}">
+                        </object>
                     </figure>
+    			</div>
+                <div class="column">
                     <!-- metadata -->
                     <div class="content">
                         <p>
@@ -40,15 +53,26 @@
                             <br> 
                             {{ image.description }}
                             <br>
-                            Location: {{ image.location }}
+                            {% if location in image %}   
+                                Location: {{ image.location }}
+                            {% endif %}    
                             <br>
                         </p>
                     </div>
-    			</div>
+                </div>
     		</div>
     	</div>
     </section>
 
 	<footer class="footer">
+        <div class="content has-text-centered">
+            <p>
+                Developed by Eric Lin
+                <br>
+                Images from NASA Image API. Open source Bulma styling
+                <br>
+                March 2019  
+            </p>            
+      </div>
     </footer>
 </body>

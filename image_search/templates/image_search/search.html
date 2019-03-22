@@ -36,7 +36,7 @@
     <!-- Section for searching and displaying past searches. -->
     <section class="section">
         <div class="container">
-            <div class="columns is-mobile">
+            <div class="columns is-mobile is-gapless">
                 <div class="column is-4">
                     <form method="POST">
                         {% csrf_token %}
@@ -54,7 +54,7 @@
                 </div>
                 <div class="columns is-gapless">
                     <!-- Links to past searches. -->
-                    Past searches:
+                    <button class="button"> Past searches: </button>
                     {% for search in past_searches %}
                         <div class="column">
                             <form action="{% url 'index' %}" method="POST">
@@ -73,7 +73,7 @@
             <div class="column is-4 is-mobile">
                 <p>
                     {% if num_hits != 0 %} 
-                        {{ num_hits }} search results
+                        {{ num_hits }} search results for "{{q}}"
                     {% endif %}
                 </p>
             </div>
@@ -87,7 +87,10 @@
                     <div class="column is-4">
                         <div class="box">
                             <figure>
-                                <img src= {{ image.media_link }} alt="Image">
+                                <a href="{% url 'image_page' %}?id={{image.nasa_id}}"> 
+                                    <object data="{{ image.media_link }}" type="image/jpg" alt="Image {{ image.media_link }}">
+                                    </object>
+                                </a>
                             </figure>
                         </div>
                     </div>
@@ -95,8 +98,6 @@
             </div>
         </div>
     </section>
-    <main class="Site-content">
-    </main>
     <footer class="footer">
         <div class="content has-text-centered">
             <p>

@@ -9,7 +9,7 @@ class Image(models.Model):		# to store favorite images
 		return self.nasa_id
 
 class Search(models.Model):		# to store past searches
-	search_query = models.CharField(max_length=32)	
+	search_query = models.CharField(max_length=64)	
 
 	def __str__(self):
 		return self.search_query
