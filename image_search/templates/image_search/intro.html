@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NASA Image Search</title>
+    <!-- Use Open Source Bulma CSS Template -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.4/css/bulma.min.css">
+    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/styles.css'%}">
+    <link rel="shortcut icon" href="{% static 'images/nasa_favicon2.ico' %}">
+</head>
+
+<section class="hero is-primary is-bold is-fullheight">
+  <div class="hero-body">
+    <div class="container has-text-centered">
+      <h1 class="title">
+        NASA Image API Search
+      </h1>
+      <section class="section">
+        <div class="container">
+            <div class="columns is-mobile">
+                <div class="column is-4 is-offset-4">
+                    <form method="POST">
+                        {% csrf_token %}
+                        <div class="field has-addons">
+                            <div class="control is-expanded">
+                                {{ form.search_query }}
+                            </div>
+                            <div class="control">
+                                <button type="submit" class="button is-info">
+                                    Search
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                  </div>
+                </div>
+            </div>
+        </div>
+      </section>
+  </div>
+</section>
+
+</html>
