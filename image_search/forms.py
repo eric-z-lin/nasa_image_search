@@ -1,13 +1,7 @@
 # /image_search/forms.py
 
 from django.forms import ModelForm, TextInput
-from .models import Image, Search
-
-# Form for favorite images
-class ImageForm(ModelForm):
-	class Meta:
-		model = Image
-		fields = ['nasa_id']
+from .models import Search
 
 # Form for search functionality
 class SearchForm(ModelForm):
